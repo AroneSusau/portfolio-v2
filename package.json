@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@fontsource/roboto": "^4.5.7",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/lab": "^5.0.0-alpha.93",
+    "@mui/material": "^5.9.3",
+    "i": "^0.3.7",
+    "next": "latest",
+    "npm": "^8.16.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-scroll": "^1.8.7",
+    "react-scroll-parallax": "^3.2.0",
+    "uuid": "^8.3.2"
+  }
+}
