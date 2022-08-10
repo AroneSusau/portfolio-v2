@@ -7,6 +7,7 @@ import {
   Button,
   CardContent,
   Chip,
+  Link,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 
@@ -23,25 +24,23 @@ function ToProjectCard({ name, description, topics, url }) {
           gap={3}
           justifyContent="space-between"
         >
-          <Typography variant="h5">
-            {name
-              .split('-')
-              .map((word) => word[0].toUpperCase() + word.substring(1))
-              .join(' ')}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description}
-          </Typography>
-          <Button
-            variant="outlined"
-            color="black"
-            href={url}
+          <Link
             noopener="true"
             noreferal="true"
             target="_blank"
+            color="#000000"
+            href={url}
           >
-            {name}
-          </Button>
+            <Typography variant="h5" color="black">
+              {name
+                .split('-')
+                .map((word) => word[0].toUpperCase() + word.substring(1))
+                .join(' ')}
+            </Typography>
+          </Link>
+          <Typography variant="body2" color="text.secondary">
+            {description}
+          </Typography>
           <Box display="flex" flexDirection="row" flexWrap="wrap" gap={1}>
             {topics.map((topic) => (
               <Chip key={uuid.v4()} label={topic} size="small" />
