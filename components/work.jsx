@@ -12,10 +12,11 @@ import {
 import { TabPanel, TabContext, TabList } from '@mui/lab'
 import { useCallback, useState } from 'react'
 import { ArrowRight } from '@mui/icons-material'
+import * as uuid from 'uuid'
 
 function WorkListItem(props) {
   return (
-    <ListItem disableGutters divider>
+    <ListItem divider>
       <ListItemIcon>
         <ArrowRight />
       </ListItemIcon>
@@ -30,7 +31,7 @@ function Chips(...list) {
   return (
     <Box display="flex" flexWrap="wrap" gap={1}>
       {list.map((item) => (
-        <Chip label={item} size="small"></Chip>
+        <Chip key={uuid.v4()} label={item} size="small"></Chip>
       ))}
     </Box>
   )
@@ -50,7 +51,7 @@ export default function Work() {
         maxWidth={false}
         sx={{ paddingY: '40px', backgroundColor: '#ffffff' }}
       >
-        <Grid container sx={{ maxWidth: 800, margin: 'auto' }} gap={2}>
+        <Grid container sx={{ maxWidth: 1200, margin: 'auto' }} gap={2}>
           <Typography
             variant="h3"
             fontWeight="light"
@@ -83,7 +84,7 @@ export default function Work() {
                 Nov 2021 - Present
               </Typography>
               {Chips('Golang', 'Javascript', 'AWS', 'Full Stack')}
-              <List disablePadding disableGutters>
+              <List disablePadding>
                 <WorkListItem>
                   Write modern, performant, maintainable code for the Blackmagic
                   Design Cloud core services platform.

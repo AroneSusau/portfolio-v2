@@ -1,4 +1,4 @@
-import { Box, Fade, Slide, Typography } from '@mui/material'
+import { Box, Fade, Slide, Typography, IconButton } from '@mui/material'
 
 import { LinkedIn, GitHub } from '@mui/icons-material'
 import { useEffect, useMemo, useState } from 'react'
@@ -73,8 +73,22 @@ export default function Footer() {
               paddingX={3}
               gap={3}
             >
-              <LinkedIn sx={hoverStyles} />
-              <GitHub sx={hoverStyles} />
+              <IconButton
+                href="https://www.linkedin.com/in/arone-susau/"
+                noopener="true"
+                noreferer="true"
+                target="_blank"
+              >
+                <LinkedIn sx={hoverStyles} />
+              </IconButton>
+              <IconButton
+                href="https://github.com/AroneSusau"
+                noopener="true"
+                noreferer="true"
+                target="_blank"
+              >
+                <GitHub sx={hoverStyles} />
+              </IconButton>
             </Box>
           </Box>
         </Fade>
