@@ -1,9 +1,8 @@
 const ErrCodeInternalServiceError = 'InternalServiceError'
-const NewInternalServiceError = (err) => {
+const NewInternalServiceError = () => {
   return {
     code: ErrCodeInternalServiceError,
     message: 'The service was unable to execute your request.',
-    error: JSON.stringify(err),
   }
 }
 
@@ -19,9 +18,10 @@ const ToProjectsResponse = ({ name, description, html_url, topics }) => {
 export default async function handler(req, res) {
   const githubAPI = 'https://api.github.com/users/AroneSusau/repos'
   const githubUser = 'AroneSusau'
-  const githubPublicKey = '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'
 
   // Safe restricted readonly key
+  const githubPublicKey = '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'
+
   await getProjectsHandler(req, res, githubAPI, githubUser, githubPublicKey)
 }
 
@@ -45,7 +45,10 @@ export async function getProjectsHandler(
       return res.json()
     })
     .then((res) => res.map((item) => ToProjectsResponse(item)))
-    .catch((err) => NewInternalServiceError(err))
+    .catch((err) => {
+      console.dir(err)
+      return NewInternalServiceError()
+    })
 
   if (data.code === ErrCodeInternalServiceError) {
     res.status(500).json(data)

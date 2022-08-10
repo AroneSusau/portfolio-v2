@@ -42,13 +42,9 @@ export default function App() {
         </Head>
         <Header />
         <Landing />
-        <Divider /> {/* TODO: delete me later */}
         <About />
-        <Divider /> {/* TODO: delete me later */}
         <Work />
-        <Divider /> {/* TODO: delete me later */}
         <Projects />
-        <Divider /> {/* TODO: delete me later */}
         <Contact />
         <Footer />
       </Box>
