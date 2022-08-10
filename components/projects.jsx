@@ -4,14 +4,11 @@ import {
   Container,
   Box,
   Card,
-  Button,
   CardContent,
   Chip,
   Link,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-
-import path from 'path'
 import * as uuid from 'uuid'
 
 function ToProjectCard({ name, description, topics, url }) {
@@ -54,9 +51,6 @@ function ToProjectCard({ name, description, topics, url }) {
 
 export default function Projects() {
   const host = process.env.NEXT_PUBLIC_HOST
-  const githubUser = process.env.NEXT_PUBLIC_GITHUB_USER
-  const githubPublicKey = process.env.NEXT_PUBLIC_GITHUB_KEY
-
   const [projects, setProjects] = useState([])
 
   useEffect(async () => {
@@ -106,6 +100,10 @@ export default function Projects() {
               borderRadius: '5px',
             }}
           >
+            {/* 
+              TODO: - pagination is a nice to have, especially on mobile. 
+                    - Also transition effects on scroll-into-view.
+            */}
             {projects}
           </Box>
         </Box>

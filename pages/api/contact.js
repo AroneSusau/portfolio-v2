@@ -3,6 +3,7 @@ const sgMail = require('@sendgrid/mail')
 const sgAPIKey = process.env.SENDGRID_API_KEY
 const sgTemplateId = process.env.SENDGRID_TEMPLATE_ID
 const sgReceiver = process.env.SENDGRID_RECEIVER
+const sgSender = process.env.SENDGRID_SENDER
 
 sgMail.setApiKey(sgAPIKey)
 
@@ -55,7 +56,7 @@ export default async function handler(req, res) {
 
   const msg = {
     to: sgReceiver,
-    from: email,
+    from: sgSender,
     templateId: sgTemplateId,
     dynamicTemplateData: {
       sender: email,
