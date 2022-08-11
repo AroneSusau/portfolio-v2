@@ -1,3 +1,4 @@
+import { SecurityUpdateWarningRounded } from '@mui/icons-material'
 import {
   FormControl,
   Grid,
@@ -9,6 +10,8 @@ import {
   Container,
   Snackbar,
   Alert,
+  CircularProgress,
+  Fade,
 } from '@mui/material'
 import { useCallback, useState } from 'react'
 
@@ -33,6 +36,28 @@ function ContactInfo() {
   )
 }
 
+const SpinnerOverlay = (props) => {
+  return (
+    <Fade in={props.disabled}>
+      <Box
+        display={props.disabled ? 'none' : 'flex'}
+        position="absolute"
+        sx={{
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        }}
+        width="100%"
+        height="100%"
+        zIndex={255}
+        borderRadius="5px"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <CircularProgress color="white" />
+      </Box>
+    </Fade>
+  )
+}
+
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
 function ContactForm() {
@@ -41,6 +66,7 @@ function ContactForm() {
   const [subject, setSubject] = useState('')
   const [message, setMessage] = useState('')
   const [alerts, setAlerts] = useState([])
+  const [disabled, setDisabled] = useState(false)
 
   const onEmailChange = useCallback((e) => {
     setEmail(e.target.value)
@@ -73,7 +99,7 @@ function ContactForm() {
     )
   })
 
-  const onSubmit = useCallback(async (e) => {
+  const sendEmail = useCallback(async (e) => {
     e.preventDefault()
 
     if (!emailRegex.test(email)) {
@@ -100,6 +126,7 @@ function ContactForm() {
         setEmail('')
         setSubject('')
         setMessage('')
+        setDisabled(false)
 
         setAlerts([
           ...alerts,
@@ -110,6 +137,7 @@ function ContactForm() {
         ])
       })
       .catch((_) => {
+        setDisabled(false)
         setAlerts([
           ...alerts,
           newAlert('error', 'Something went wrong, please try again later..'),
@@ -117,13 +145,20 @@ function ContactForm() {
       })
   })
 
+  const onSubmit = useCallback((e) => {
+    setDisabled(true)
+    sendEmail(e)
+  })
+
   return (
     <form
       onSubmit={onSubmit}
       style={{
         width: '100%',
+        position: 'relative',
       }}
     >
+      <SpinnerOverlay disabled={disabled} />
       {alerts}
       <Grid container item gap={5} direction="column">
         <FormControl>
