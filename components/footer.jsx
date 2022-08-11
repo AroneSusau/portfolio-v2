@@ -1,4 +1,5 @@
-import { Box, Fade, Slide, Typography, IconButton } from '@mui/material'
+import { Box, Fade, Slide, Typography, IconButton, Link } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { LinkedIn, GitHub } from '@mui/icons-material'
 import { useEffect, useMemo, useState } from 'react'
@@ -19,6 +20,7 @@ export default function Footer() {
   )
 
   const [showFooter, setShowFooter] = useState(false)
+  const mediaSm = useMediaQuery('(min-width:800px)')
 
   useEffect(() => {
     window.addEventListener('scroll', (e) => {
@@ -42,9 +44,6 @@ export default function Footer() {
           height: 50,
           zIndex: 1,
         }}
-        onScroll={(e) => {
-          console.log('wassap')
-        }}
       >
         <Fade in={showFooter} timeout={1000}>
           <Box
@@ -55,21 +54,52 @@ export default function Footer() {
             justifyContent="space-between"
             borderTop="1px solid rgba(0, 0, 0, 0.2)"
           >
-            <Box
-              display="flex"
-              justifyContent="flex-start"
-              paddingX={3}
-              width="50%"
-            >
+            <Box display="flex" justifyContent="flex-start" paddingX={3}>
               <Typography variant="subtitle2" fontWeight="light" marginY="auto">
                 &copy; 2022 Arone Susau
+              </Typography>
+            </Box>
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <Typography
+                fontWeight="light"
+                variant="caption"
+                display={!mediaSm ? 'none' : 'inline'}
+              >
+                This website was built with{' '}
+                <Link
+                  href="https://reactjs.org/"
+                  noopener="true"
+                  noreferer="true"
+                >
+                  React
+                </Link>{' '}
+                using{' '}
+                <Link
+                  href="https://nextjs.org/"
+                  noopener="true"
+                  noreferer="true"
+                >
+                  NextJS
+                </Link>{' '}
+                and{' '}
+                <Link href="https://mui.com/" noopener="true" noreferer="true">
+                  Material UI
+                </Link>
+                , deployed to{' '}
+                <Link
+                  href="https://vercel.com/"
+                  noopener="true"
+                  noreferer="true"
+                >
+                  Vercel
+                </Link>
+                .
               </Typography>
             </Box>
             <Box
               display="flex"
               justifyContent="flex-end"
               alignItems="center"
-              width="50%"
               paddingX={3}
               gap={3}
             >
