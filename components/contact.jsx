@@ -36,6 +36,7 @@ function ContactInfo() {
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
 function ContactForm() {
+  const host = process.env.NEXT_PUBLIC_HOST
   const [email, setEmail] = useState('')
   const [subject, setSubject] = useState('')
   const [message, setMessage] = useState('')
@@ -72,7 +73,7 @@ function ContactForm() {
     )
   })
 
-  const onSubmit = useCallback((e) => {
+  const onSubmit = useCallback(async (e) => {
     e.preventDefault()
 
     if (!emailRegex.test(email)) {
@@ -84,20 +85,36 @@ function ContactForm() {
       return
     }
 
-    // TODO: Send email to backend api
-    // if err then alert new error
+    fetch(host + 'api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        subject,
+        message,
+      }),
+    })
+      .then((_) => {
+        setEmail('')
+        setSubject('')
+        setMessage('')
 
-    setEmail('')
-    setSubject('')
-    setMessage('')
-
-    setAlerts([
-      ...alerts,
-      newAlert(
-        'success',
-        "Thanks for reaching out, I'll get back to you shortly."
-      ),
-    ])
+        setAlerts([
+          ...alerts,
+          newAlert(
+            'success',
+            "Thanks for reaching out, I'll get back to you shortly."
+          ),
+        ])
+      })
+      .catch((_) => {
+        setAlerts([
+          ...alerts,
+          newAlert('error', 'Something went wrong, please try again later..'),
+        ])
+      })
   })
 
   return (

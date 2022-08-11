@@ -1,79 +1,39 @@
-const sgMail = require('@sendgrid/mail')
+import { Contact } from '../../src/models/contact'
+import {
+  NewBadRequestError,
+  NewInternalServiceError,
+  NewMethodNotAllowedError,
+} from '../../src/models/errors'
+import { Methods } from '../../src/models/methods'
+import { Status } from '../../src/models/statuses'
+import * as sg from '../../src/providers/sendgrid/client'
 
-const sgAPIKey = process.env.SENDGRID_API_KEY
-const sgTemplateId = process.env.SENDGRID_TEMPLATE_ID
-const sgReceiver = process.env.SENDGRID_RECEIVER
-const sgSender = process.env.SENDGRID_SENDER
-
-sgMail.setApiKey(sgAPIKey)
-
-const ErrCodeMethodNotAllowedError = 'MethodNotAllowedError'
-const ErrCodeBadRequestError = 'BadRequestError'
-const ErrCodeInternalServiceError = 'InternalServiceError'
-const NewInternalServiceError = () => {
-  return {
-    code: ErrCodeInternalServiceError,
-    message: 'The service was unable to execute your request.',
-  }
-}
-
-const isInvalid = (input) => input === '' || input === undefined
+const sgClient = new sg.Client()
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.status(405).json({
-      code: ErrCodeMethodNotAllowedError,
-      message: 'Method not allowed',
-    })
+  if (req.method !== Methods.POST) {
+    res
+      .status(Status.METHOD_NOT_ALLOWED)
+      .json(NewMethodNotAllowedError(req.method))
     return
   }
 
   const { email, subject, message } = req.body
+  const contactEmail = new Contact(email, subject, message)
+  const validationResult = contactEmail.validate()
 
-  if (isInvalid(email)) {
-    res.status(400).json({
-      code: ErrCodeBadRequestError,
-      message: 'Email is invalid',
-    })
-    return
+  if (validationResult !== undefined) {
+    res.status(Status.BAD_REQUEST).json(NewBadRequestError(validationResult))
   }
 
-  if (isInvalid(subject)) {
-    res.status(400).json({
-      code: ErrCodeBadRequestError,
-      message: 'Subject is invalid',
-    })
-    return
-  }
-
-  if (isInvalid(message)) {
-    res.status(400).json({
-      code: ErrCodeBadRequestError,
-      message: 'Message is invalid',
-    })
-    return
-  }
-
-  const msg = {
-    to: sgReceiver,
-    from: sgSender,
-    templateId: sgTemplateId,
-    dynamicTemplateData: {
-      sender: email,
-      subject,
-      message,
-    },
-  }
-
-  await sgMail
-    .send(msg)
+  await sgClient
+    .sendContactEmail(email, subject, message)
     .then((_) => {
-      res.status(204).end()
+      res.status(Status.NO_CONTENT).end()
       return
     })
     .catch((err) => {
-      console.dir(err)
-      res.status(500).json(NewInternalServiceError())
+      res.status(Status.INTERNAL_SERVICE_ERROR).json(NewInternalServiceError())
       return
     })
 }

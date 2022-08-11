@@ -1,10 +1,10 @@
-const ErrCodeInternalServiceError = 'InternalServiceError'
-const NewInternalServiceError = () => {
-  return {
-    code: ErrCodeInternalServiceError,
-    message: 'The service was unable to execute your request.',
-  }
-}
+import { NewInternalServiceError } from '../../src/models/errors'
+import { Methods } from '../../src/models/methods'
+import { Status } from '../../src/models/statuses'
+
+const githubPublicKey = process.env.GITHUB_API_KEY
+const githubUser = process.env.GITHUB_USER
+const githubAPI = process.env.GITHUB_REPO_ENDPOINT
 
 const ToProjectsResponse = ({ name, description, html_url, topics }) => {
   return {
@@ -15,45 +15,28 @@ const ToProjectsResponse = ({ name, description, html_url, topics }) => {
   }
 }
 
-export default async function handler(req, res) {
-  const githubAPI = 'https://api.github.com/users/AroneSusau/repos'
-  const githubUser = 'AroneSusau'
-
-  // Safe restricted readonly key
-  const githubPublicKey = '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'
-
-  await getProjectsHandler(req, res, githubAPI, githubUser, githubPublicKey)
+const errResponse = ({ status, statusText }) => {
+  throw new Error(`${status}: ${statusText}`)
 }
 
-export async function getProjectsHandler(
-  req,
-  res,
-  githubAPI,
-  githubUser,
-  githubPublicKey
-) {
-  const data = await fetch(githubAPI, {
-    headers: {
-      Authorization: `Basic ${btoa(`${githubUser}:${githubPublicKey}`)}`,
-    },
-  })
-    .then((res) => {
-      if (res.status > 299) {
-        throw new Error(`${res.status}: ${res.statusText}`)
-      }
+const headers = {
+  Authorization: `Basic ${btoa(`${githubUser}:${githubPublicKey}`)}`,
+}
 
-      return res.json()
-    })
-    .then((res) => res.map((item) => ToProjectsResponse(item)))
-    .catch((err) => {
-      console.dir(err)
-      return NewInternalServiceError()
-    })
-
-  if (data.code === ErrCodeInternalServiceError) {
-    res.status(500).json(data)
+export default async function handler(req, res) {
+  if (req.method !== Methods.GET) {
+    res
+      .status(Status.METHOD_NOT_ALLOWED)
+      .json(NewMethodNotAllowedError(req.method))
     return
   }
 
-  res.status(200).json(data)
+  await fetch(githubAPI, { headers })
+    .then((res) => (res.status != Status.OK ? errResponse(res) : res.json()))
+    .then((res) => res.map((item) => ToProjectsResponse(item)))
+    .then((data) => res.status(Status.OK).json(data))
+    .catch((err) => {
+      console.dir(err)
+      res.status(Status.INTERNAL_SERVICE_ERROR).json(NewInternalServiceError())
+    })
 }
