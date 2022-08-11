@@ -99,7 +99,7 @@ function ContactForm() {
     )
   })
 
-  const onSubmit = useCallback(async (e) => {
+  const onSubmit = useCallback((e) => {
     e.preventDefault()
 
     if (!emailRegex.test(email)) {
