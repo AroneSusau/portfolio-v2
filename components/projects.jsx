@@ -54,11 +54,9 @@ export default function Projects() {
   const [projects, setProjects] = useState([])
 
   useEffect(async () => {
-    const data = await fetch(host + 'api/projects').then((res) =>
-      res.status == 200 ? res.json() : []
-    )
-
-    setProjects(data.map(ToProjectCard))
+    fetch(host + 'api/projects')
+      .then((res) => (res.status == 200 ? res.json() : []))
+      .then((res) => setProjects(res.map(ToProjectCard)))
   }, [])
 
   if (projects.length == 0) {
