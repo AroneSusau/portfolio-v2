@@ -26,7 +26,7 @@ export default function About() {
             My interest in software development started back in 2017 when I
             decided to try to create video games using the Javascript Canvas API
             — turns out hacking together a flappy bird clone taught me a lot
-            about engineering fundementals and web technologies.
+            about engineering fundamentals and web technologies.
           </Typography>
           <Typography variant="body1" fontWeight="light">
             Fast-forward to today, and I've had the privilege of working at a
