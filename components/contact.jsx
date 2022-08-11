@@ -36,28 +36,6 @@ function ContactInfo() {
   )
 }
 
-const SpinnerOverlay = (props) => {
-  return (
-    <Fade in={props.disabled}>
-      <Box
-        display={props.disabled ? 'none' : 'flex'}
-        position="absolute"
-        sx={{
-          backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        }}
-        width="100%"
-        height="100%"
-        zIndex={255}
-        borderRadius="5px"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CircularProgress color="white" />
-      </Box>
-    </Fade>
-  )
-}
-
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
 function ContactForm() {
@@ -101,6 +79,8 @@ function ContactForm() {
 
   const onSubmit = useCallback((e) => {
     e.preventDefault()
+
+    setDisabled(true)
 
     if (!emailRegex.test(email)) {
       setAlerts([
@@ -153,7 +133,6 @@ function ContactForm() {
         position: 'relative',
       }}
     >
-      <SpinnerOverlay disabled={disabled} />
       {alerts}
       <Grid container item gap={5} direction="column">
         <FormControl>
@@ -165,6 +144,7 @@ function ContactForm() {
             type="email"
             aria-describedby="contact email"
             value={email}
+            disabled={disabled}
           />
         </FormControl>
         <FormControl>
@@ -175,6 +155,7 @@ function ContactForm() {
             id="subject"
             aria-describedby="message subject"
             value={subject}
+            disabled={disabled}
           />
         </FormControl>
         <FormControl>
@@ -187,21 +168,26 @@ function ContactForm() {
             multiline
             minRows={4}
             value={message}
+            disabled={disabled}
           />
         </FormControl>
-        <Box>
+        <Box display="flex" flexDirection="row" gap={3}>
           <Button
             type="submit"
             color="black"
             variant="outlined"
-            onClick={() => {
-              setDisabled(true)
-            }}
             sx={{ borderRadius: 100, minWidth: 200 }}
             fullWidth={false}
+            disabled={disabled}
           >
             Send
           </Button>
+          <CircularProgress
+            color="black"
+            sx={{
+              display: disabled ? 'box' : 'none',
+            }}
+          />
         </Box>
       </Grid>
     </form>
