@@ -12,6 +12,7 @@ import {
   Alert,
   CircularProgress,
   Fade,
+  FormHelperText,
 } from '@mui/material'
 import { useCallback, useState } from 'react'
 
@@ -170,6 +171,9 @@ function ContactForm() {
             value={message}
             disabled={disabled}
           />
+          <FormHelperText id="message">
+            Press enter to add more lines.
+          </FormHelperText>
         </FormControl>
         <Box display="flex" flexDirection="row" gap={3}>
           <Button
