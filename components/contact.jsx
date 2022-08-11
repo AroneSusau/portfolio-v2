@@ -99,7 +99,7 @@ function ContactForm() {
     )
   })
 
-  const sendEmail = useCallback(async (e) => {
+  const onSubmit = useCallback(async (e) => {
     e.preventDefault()
 
     if (!emailRegex.test(email)) {
@@ -143,11 +143,6 @@ function ContactForm() {
           newAlert('error', 'Something went wrong, please try again later..'),
         ])
       })
-  })
-
-  const onSubmit = useCallback((e) => {
-    setDisabled(true)
-    sendEmail(e)
   })
 
   return (
@@ -199,6 +194,9 @@ function ContactForm() {
             type="submit"
             color="black"
             variant="outlined"
+            onClick={() => {
+              setDisabled(true)
+            }}
             sx={{ borderRadius: 100, minWidth: 200 }}
             fullWidth={false}
           >
