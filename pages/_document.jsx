@@ -15,8 +15,12 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=BhuTuka+Expanded+One&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap"
+          rel="stylesheet"
+        ></link>
       </Head>
-      <body style={{ margin: 0 }}>
+      <body style={{ margin: 0, backgroundColor: '#000000' }}>
         <Main />
         <NextScript />
       </body>

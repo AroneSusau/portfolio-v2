@@ -10,6 +10,8 @@ import Projects from '../components/projects'
 import Work from '../components/work'
 import Footer from '../components/footer'
 import Header from '../components/header'
+import { useEffect, useMemo, useState } from 'react'
+import ThreeCanvas from '../components/canvas'
 
 const theme = createTheme({
   palette: {
@@ -29,6 +31,20 @@ const theme = createTheme({
   },
 })
 
+function BaseLanding() {
+  const [win, setWindow] = useState(undefined)
+
+  useEffect(() => {
+    setWindow(window)
+  })
+
+  return win !== undefined && win.WebGLRenderingContext !== undefined ? (
+    <ThreeCanvas />
+  ) : (
+    <Landing />
+  )
+}
+
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -41,7 +57,7 @@ export default function App() {
           />
         </Head>
         <Header />
-        <Landing />
+        <BaseLanding />
         <About />
         <Work />
         <Projects />

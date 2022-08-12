@@ -18,7 +18,7 @@ function NavButton(props) {
         scrollTo()
       }}
     >
-      <Typography variant="subtitle2" fontWeight="light">
+      <Typography variant="subtitle2" fontWeight="light" color="#ffffff">
         {props.to}
       </Typography>
     </Button>
@@ -50,9 +50,9 @@ export default function Header() {
         zIndex={1}
         top={0}
         left={0}
-        backgroundColor="#ffffff"
+        // backgroundColor="#ffffff"
         flexDirection="row"
-        borderBottom="1px solid #d3d3d3"
+        // borderBottom="1px solid #d3d3d3"
       >
         <Box display="flex" paddingRight={1}>
           <NavButton to="About" />
