@@ -58,6 +58,7 @@ export default class Engine {
 
     this.setupLighting()
     this.setupObjects()
+    this.setupNormalScroll()
   }
 
   setupCamera() {
@@ -91,6 +92,26 @@ export default class Engine {
     this.composer.addPass(this.bloomPass)
 
     window.addEventListener('resize', () => this.onResize)
+  }
+
+  setupNormalScroll() {
+    this.normalScroll = 0
+
+    window.addEventListener('scroll', (e) => {
+      let body = document.body
+      let html = document.documentElement
+
+      let maxHeight =
+        Math.max(
+          body.scrollHeight,
+          body.offsetHeight,
+          html.clientHeight,
+          html.scrollHeight,
+          html.offsetHeight
+        ) - window.innerHeight
+
+      this.normalScroll = window.scrollY / maxHeight
+    })
   }
 
   setupControls() {
@@ -136,16 +157,19 @@ export default class Engine {
 
     this.objectUniforms = {
       uTime: { value: 0 },
+      uNormalScroll: { value: 0 },
     }
 
     material.onBeforeCompile = (shader) => {
       shader.uniforms.uTime = this.objectUniforms.uTime
+      shader.uniforms.uNormalScroll = this.objectUniforms.uNormalScroll
 
       shader.vertexShader = shader.vertexShader.replace(
         '#include <common>',
         `
         #include <common>
         uniform float uTime;
+        uniform float uNormalScroll;
         `
       )
 
@@ -182,6 +206,7 @@ export default class Engine {
     this.clock.update()
 
     this.objectUniforms.uTime.value = this.clock.elapsed
+    this.objectUniforms.uNormalScroll.value = this.normalScroll
 
     this.composer.render()
   }

@@ -25,11 +25,22 @@ function ContactInfo() {
         variant="h3"
         fontWeight="light"
         gutterBottom
-        fontFamily="'Playfair Display', serif"
+        fontFamily="'Didact Gothic', sans-serif"
+        sx={{
+          color: '#ffffff',
+        }}
       >
         Get in touch
       </Typography>
-      <Typography variant="body1" fontWeight="light" gutterBottom>
+      <Typography
+        variant="body1"
+        fontWeight="light"
+        gutterBottom
+        fontFamily="'Didact Gothic', sans-serif"
+        sx={{
+          color: '#ffffff',
+        }}
+      >
         Whether you want to talk about tech, work or just wanted to say hello.
         My inbox is always open. I'll try my best to get back to you!
       </Typography>
@@ -137,7 +148,14 @@ function ContactForm() {
       {alerts}
       <Grid container item gap={5} direction="column">
         <FormControl>
-          <InputLabel htmlFor="email">Email address</InputLabel>
+          <InputLabel
+            htmlFor="email"
+            sx={{
+              color: '#ffffff',
+            }}
+          >
+            Email address
+          </InputLabel>
           <Input
             onChange={onEmailChange}
             required
@@ -146,10 +164,21 @@ function ContactForm() {
             aria-describedby="contact email"
             value={email}
             disabled={disabled}
+            sx={{
+              color: '#ffffff',
+              borderColor: '#ffffff',
+            }}
           />
         </FormControl>
         <FormControl>
-          <InputLabel htmlFor="subject">Subject</InputLabel>
+          <InputLabel
+            htmlFor="subject"
+            sx={{
+              color: '#ffffff',
+            }}
+          >
+            Subject
+          </InputLabel>
           <Input
             onChange={onSubjectChange}
             required
@@ -157,10 +186,20 @@ function ContactForm() {
             aria-describedby="message subject"
             value={subject}
             disabled={disabled}
+            sx={{
+              color: '#ffffff',
+            }}
           />
         </FormControl>
         <FormControl>
-          <InputLabel htmlFor="message">Message</InputLabel>
+          <InputLabel
+            htmlFor="message"
+            sx={{
+              color: '#ffffff',
+            }}
+          >
+            Message
+          </InputLabel>
           <Input
             onChange={onMessageChange}
             required
@@ -170,15 +209,23 @@ function ContactForm() {
             minRows={4}
             value={message}
             disabled={disabled}
+            sx={{
+              color: '#ffffff',
+            }}
           />
-          <FormHelperText id="message">
+          <FormHelperText
+            id="message"
+            sx={{
+              color: '#ffffff',
+            }}
+          >
             Press enter to add more lines.
           </FormHelperText>
         </FormControl>
         <Box display="flex" flexDirection="row" gap={3}>
           <Button
             type="submit"
-            color="black"
+            color="white"
             variant="outlined"
             sx={{ borderRadius: 100, minWidth: 200 }}
             fullWidth={false}
@@ -187,7 +234,7 @@ function ContactForm() {
             Send
           </Button>
           <CircularProgress
-            color="black"
+            color="white"
             sx={{
               display: disabled ? 'box' : 'none',
             }}
@@ -206,7 +253,7 @@ export default function Contact() {
       sx={{
         paddingTop: '40px',
         paddingBottom: '100px',
-        backgroundColor: '#ffffff',
+        backgroundColor: 'transparent',
       }}
     >
       <Grid container gap={4} sx={{ maxWidth: 1200, margin: 'auto' }}>

@@ -18,7 +18,12 @@ function NavButton(props) {
         scrollTo()
       }}
     >
-      <Typography variant="subtitle2" fontWeight="light" color="#ffffff">
+      <Typography
+        variant="subtitle2"
+        fontWeight="light"
+        color="#ffffff"
+        fontFamily="'Didact Gothic', sans-serif"
+      >
         {props.to}
       </Typography>
     </Button>

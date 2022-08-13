@@ -20,7 +20,12 @@ function WorkListItem(props) {
       <ListItemIcon>
         <ArrowRight />
       </ListItemIcon>
-      <Typography variant="body2" fontWeight="light">
+      <Typography
+        variant="body2"
+        fontWeight="light"
+        fontFamily="'Didact Gothic', sans-serif"
+        color="#ffffff"
+      >
         {props.children}
       </Typography>
     </ListItem>
@@ -31,7 +36,16 @@ function Chips(...list) {
   return (
     <Box display="flex" flexWrap="wrap" gap={1}>
       {list.map((item) => (
-        <Chip key={uuid.v4()} label={item} size="small"></Chip>
+        <Chip
+          key={uuid.v4()}
+          label={item}
+          size="small"
+          variant="filled"
+          sx={{
+            color: '#ffffff',
+            borderColor: '#ffffff',
+          }}
+        ></Chip>
       ))}
     </Box>
   )
@@ -49,14 +63,15 @@ export default function Work() {
       <Container
         id="work"
         maxWidth={false}
-        sx={{ paddingY: '40px', backgroundColor: '#ffffff' }}
+        sx={{ paddingY: '40px', backgroundColor: 'transparent' }}
       >
         <Grid container sx={{ maxWidth: 1200, margin: 'auto' }} gap={2}>
           <Typography
             variant="h3"
             fontWeight="light"
             width="100%"
-            fontFamily="'Playfair Display', serif"
+            color="#ffffff"
+            fontFamily="'Didact Gothic', sans-serif"
           >
             Where I've worked
           </Typography>
@@ -71,16 +86,39 @@ export default function Work() {
               width: '100%',
             }}
           >
-            <Tab label="Blackmagic Design" value="1" />
-            <Tab label="Zendesk" value="2" />
+            <Tab
+              label="Blackmagic Design"
+              value="1"
+              color="#ffffff"
+              sx={{
+                color: '#ffffff',
+              }}
+            />
+            <Tab
+              label="Zendesk"
+              value="2"
+              sx={{
+                color: '#ffffff',
+              }}
+            />
           </TabList>
 
           <TabPanel value="1">
             <Box display="flex" flexDirection="column" gap={2}>
-              <Typography variant="h6" fontWeight="light">
+              <Typography
+                variant="h6"
+                fontWeight="light"
+                fontFamily="'Didact Gothic', sans-serif"
+                color="#ffffff"
+              >
                 Software Engineer @ Blackmagic Design
               </Typography>
-              <Typography variant="caption" fontWeight="light">
+              <Typography
+                variant="caption"
+                fontWeight="light"
+                fontFamily="'Didact Gothic', sans-serif"
+                color="#ffffff"
+              >
                 Nov 2021 - Present
               </Typography>
               {Chips('Golang', 'Javascript', 'AWS', 'Full Stack')}
