@@ -45,9 +45,9 @@ export default function About() {
             color="#ffffff"
             fontFamily="'Didact Gothic', sans-serif"
           >
-            Fast-forward to today, and I've had the privilege of working at a
+            Fast-forward to today, and I have had the privilege of working at a
             huge corporation building machine learning infrastructure, and at
-            one of the worlds leading producers of film and television studio
+            one of the world's leading producers of film and television studio
             products. My main focus these days is building scalable and
             performant cloud products at{' '}
             <Link
