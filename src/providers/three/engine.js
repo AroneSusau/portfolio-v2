@@ -56,7 +56,7 @@ export default class Engine {
     this.setupControls()
     this.setupRenderer()
 
-    this.setupLighting()
+    this.setupPixelColor()
     this.setupObjects()
     this.setupNormalScroll()
   }
@@ -129,29 +129,10 @@ export default class Engine {
     }
   }
 
-  setupLighting() {
-    this.directionalLight = new three.DirectionalLight('#ffaaff', 1)
-    this.directionalLight.position.set(30, 30, 0)
-
-    if (this.debug) {
-      const dlHelper = new three.DirectionalLightHelper(
-        this.directionalLight,
-        10
-      )
-
-      this.scene.add(dlHelper)
-    }
-
-    this.ambientLight = new three.AmbientLight('#ffffff', 0.05)
-
-    // this.scene.add(this.directionalLight)
-    // this.scene.add(this.ambientLight)
-  }
-
   setupObjects() {
     // Setup instanced mesh
-    const material = new three.PointsMaterial({
-      color: '#004E98',
+    this.material = new three.PointsMaterial({
+      color: this.pixelColors.phaseOne,
       size: 0.1,
     })
 
@@ -160,7 +141,7 @@ export default class Engine {
       uNormalScroll: { value: 0 },
     }
 
-    material.onBeforeCompile = (shader) => {
+    this.material.onBeforeCompile = (shader) => {
       shader.uniforms.uTime = this.objectUniforms.uTime
       shader.uniforms.uNormalScroll = this.objectUniforms.uNormalScroll
 
@@ -180,11 +161,46 @@ export default class Engine {
     }
 
     const geometry = new three.PlaneGeometry(30, 30, 50, 50)
-    const mesh = new three.Points(geometry, material)
+    const mesh = new three.Points(geometry, this.material)
 
     mesh.rotateX(Math.PI / 2.0)
 
     this.scene.add(mesh)
+  }
+
+  setupPixelColor() {
+    this.pixelColors = {
+      phaseOne: new three.Color('#004E98'),
+      phaseTwo: new three.Color('#D7263D'),
+      phaseThree: new three.Color('#7CEA9C'),
+      current: new three.Color(),
+    }
+
+    this.pixelColors.current = this.pixelColors.phaseOne.clone()
+  }
+
+  updatePixelColor() {
+    const p1 = this.normalScroll >= 0.0 && this.normalScroll < 0.5
+    const p2 = this.normalScroll >= 0.5 && this.normalScroll <= 1.0
+
+    const p1Scroll = this.normalScroll / 0.5
+    const p2Scroll = (this.normalScroll - 0.5) / 0.5
+
+    if (p1) {
+      this.pixelColors.current.lerpColors(
+        this.pixelColors.phaseOne,
+        this.pixelColors.phaseTwo,
+        p1Scroll
+      )
+    } else if (p2) {
+      this.pixelColors.current.lerpColors(
+        this.pixelColors.phaseTwo,
+        this.pixelColors.phaseThree,
+        p2Scroll
+      )
+    }
+
+    this.material.color = this.pixelColors.current
   }
 
   onResize() {
@@ -204,6 +220,8 @@ export default class Engine {
   run() {
     this.controls.update()
     this.clock.update()
+
+    this.updatePixelColor()
 
     this.objectUniforms.uTime.value = this.clock.elapsed
     this.objectUniforms.uNormalScroll.value = this.normalScroll
