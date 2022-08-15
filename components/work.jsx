@@ -17,8 +17,8 @@ import * as uuid from 'uuid'
 function WorkListItem(props) {
   return (
     <ListItem divider>
-      <ListItemIcon>
-        <ArrowRight />
+      <ListItemIcon color="#ffffff">
+        <ArrowRight color="#ffffff" />
       </ListItemIcon>
       <Typography
         variant="body2"
@@ -65,7 +65,7 @@ export default function Work() {
         maxWidth={false}
         sx={{ paddingY: '40px', backgroundColor: 'transparent' }}
       >
-        <Grid container sx={{ maxWidth: 1200, margin: 'auto' }} gap={2}>
+        <Grid container sx={{ maxWidth: 1000, margin: 'auto' }} gap={2}>
           <Typography
             variant="h3"
             fontWeight="light"
@@ -146,10 +146,10 @@ export default function Work() {
 
           <TabPanel value="2">
             <Box display="flex" flexDirection="column" gap={2}>
-              <Typography variant="h6" fontWeight="light">
+              <Typography variant="h6" fontWeight="light" color="#ffffff">
                 Intern Software Engineer @ Zendesk
               </Typography>
-              <Typography variant="caption" fontWeight="light">
+              <Typography variant="caption" fontWeight="light" color="#ffffff">
                 Aug 2019 - Apr 2020
               </Typography>
               {Chips('Scala', 'Data Engineering', 'AWS', 'Backend')}

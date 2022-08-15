@@ -256,7 +256,7 @@ export default function Contact() {
         backgroundColor: 'transparent',
       }}
     >
-      <Grid container gap={4} sx={{ maxWidth: 1200, margin: 'auto' }}>
+      <Grid container gap={4} sx={{ maxWidth: 1000, margin: 'auto' }}>
         <ContactInfo />
         <ContactForm />
       </Grid>

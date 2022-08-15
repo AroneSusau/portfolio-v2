@@ -7,7 +7,7 @@ export default function About() {
       maxWidth={false}
       sx={{ paddingY: '40px', backgroundColor: 'none' }}
     >
-      <Grid container sx={{ maxWidth: 1200, margin: 'auto' }}>
+      <Grid container sx={{ maxWidth: 1000, margin: 'auto' }}>
         <Box display="flex" flexDirection="column" gap={3}>
           <Typography
             variant="h3"

@@ -9,11 +9,12 @@ export default function Footer() {
     () => [
       {
         '&:hover': {
-          color: '#aaaaaa',
+          color: '#3d3d3d',
         },
       },
       {
         transition: '500ms',
+        color: '#ffffff',
       },
     ],
     []
@@ -49,13 +50,17 @@ export default function Footer() {
           <Box
             width="100%"
             height="100%"
-            backgroundColor="#ffffff"
+            backgroundColor="#ffffff22"
             display="flex"
             justifyContent="space-between"
-            borderTop="1px solid rgba(0, 0, 0, 0.2)"
           >
             <Box display="flex" justifyContent="flex-start" paddingX={3}>
-              <Typography variant="subtitle2" fontWeight="light" marginY="auto">
+              <Typography
+                variant="subtitle2"
+                fontWeight="light"
+                marginY="auto"
+                color="#ffffff"
+              >
                 &copy; 2022 Arone Susau
               </Typography>
             </Box>
@@ -64,6 +69,7 @@ export default function Footer() {
                 fontWeight="light"
                 variant="caption"
                 display={!mediaSm ? 'none' : 'inline'}
+                color="#ffffff"
               >
                 This website was built with{' '}
                 <Link

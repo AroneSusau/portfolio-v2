@@ -13,7 +13,7 @@ import * as uuid from 'uuid'
 
 function ToProjectCard({ name, description, topics, url }) {
   return (
-    <Card key={uuid.v4()} sx={{ width: 250 }}>
+    <Card key={uuid.v4()} sx={{ width: 250, backgroundColor: '#ffffff22' }}>
       <CardContent>
         <Box
           display="flex"
@@ -25,22 +25,29 @@ function ToProjectCard({ name, description, topics, url }) {
             noopener="true"
             noreferal="true"
             target="_blank"
-            color="#000000"
+            color="#ffffff"
             href={url}
           >
-            <Typography variant="h5" color="black">
+            <Typography variant="h5" color="#ffffff">
               {name
                 .split('-')
                 .map((word) => word[0].toUpperCase() + word.substring(1))
                 .join(' ')}
             </Typography>
           </Link>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="#ffffff">
             {description}
           </Typography>
           <Box display="flex" flexDirection="row" flexWrap="wrap" gap={1}>
             {topics.map((topic) => (
-              <Chip key={uuid.v4()} label={topic} size="small" />
+              <Chip
+                key={uuid.v4()}
+                label={topic}
+                size="small"
+                sx={{
+                  color: '#d0d0d0',
+                }}
+              />
             ))}
           </Box>
         </Box>
@@ -67,14 +74,15 @@ export default function Projects() {
     <Container
       id="projects"
       maxWidth={false}
-      sx={{ paddingY: '40px', backgroundColor: '#ffffff' }}
+      sx={{ paddingY: '40px', backgroundColor: '#transparent' }}
     >
-      <Box maxWidth={1200} margin="auto">
+      <Box maxWidth={1000} margin="auto">
         <Typography
           variant="h3"
           fontWeight="light"
-          fontFamily="'Playfair Display', serif"
+          fontFamily="'Didact Gothic', sans-serif"
           marginBottom={3}
+          color="#ffffff"
         >
           Some things I've built
         </Typography>
@@ -94,7 +102,7 @@ export default function Projects() {
             gap={4}
             padding={4}
             sx={{
-              backgroundColor: '#eeeeee',
+              backgroundColor: 'transparent',
               borderRadius: '5px',
             }}
           >
