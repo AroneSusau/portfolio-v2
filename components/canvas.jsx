@@ -65,7 +65,7 @@ function LandingContent() {
             gutterBottom
             fontFamily="'Didact Gothic', sans-serif"
           >
-            I'm a software engineer specializing in building web application
+            I'm a software engineer specialising in building web application
             using cloud technologies. Currently, I'm focused on creating
             scalable and performant products at{' '}
             <Link

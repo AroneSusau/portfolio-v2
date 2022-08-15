@@ -124,8 +124,8 @@ export default function Work() {
               {Chips('Golang', 'Javascript', 'AWS', 'Full Stack')}
               <List disablePadding>
                 <WorkListItem>
-                  Write modern, performant, maintainable code for the Blackmagic
-                  Design Cloud core services platform.
+                  Write modern, performant, maintainable code as part of the
+                  core services platform.
                 </WorkListItem>
                 <WorkListItem>
                   Built and assisted designs of Stripe integration and webhook

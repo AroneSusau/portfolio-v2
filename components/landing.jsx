@@ -39,7 +39,7 @@ function LandingContent() {
             color="#e5e5e5"
             gutterBottom
           >
-            I'm a software engineer specializing in building web application
+            I'm a software engineer specialising in building web application
             using cloud technologies. Currently, I'm focused on creating
             scalable and performant products at{' '}
             <Link
