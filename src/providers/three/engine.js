@@ -15,6 +15,16 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 
 export default class Engine {
   setup() {
+    if (window.threeObj === undefined) {
+      window.threeObj = []
+    }
+
+    if (window.threeObj.length == 1) {
+      return window.threeObj[0]
+    }
+
+    window.threeObj.push(this)
+
     this.scene = new three.Scene()
     this.debug = false
 
@@ -22,8 +32,6 @@ export default class Engine {
       width: window.innerWidth,
       height: window.innerHeight,
     }
-
-    this.sphereCount = 35
 
     this.canvas = document.querySelector('canvas')
     this.cameraOpts = {
@@ -75,7 +83,6 @@ export default class Engine {
   setupRenderer() {
     this.renderer = new three.WebGLRenderer({
       canvas: this.canvas,
-      antialias: true,
       alpha: true,
     })
 
@@ -85,7 +92,6 @@ export default class Engine {
     this.composer = new EffectComposer(this.renderer)
 
     this.renderPass = new RenderPass(this.scene, this.camera)
-
     this.composer.addPass(this.renderPass)
 
     this.bloomPass = new UnrealBloomPass(undefined, 2.4, 1, 0.2)
@@ -110,8 +116,21 @@ export default class Engine {
           html.offsetHeight
         ) - window.innerHeight
 
-      this.normalScroll = window.scrollY / maxHeight
+      this.normalScroll = this.clamp(window.scrollY / maxHeight, 0, 1)
     })
+  }
+
+  // TODO: move these types of functions into util class
+  clamp(value, min, max) {
+    if (value > max) {
+      return max
+    }
+
+    if (value < min) {
+      return min
+    }
+
+    return value
   }
 
   setupControls() {
@@ -226,6 +245,6 @@ export default class Engine {
     this.objectUniforms.uTime.value = this.clock.elapsed
     this.objectUniforms.uNormalScroll.value = this.normalScroll
 
-    this.composer.render()
+    this.composer.render(this.clock.delta)
   }
 }
