@@ -24,6 +24,7 @@ export default async function handler(req, res) {
 
   if (validationResult !== undefined) {
     res.status(Status.BAD_REQUEST).json(NewBadRequestError(validationResult))
+    return
   }
 
   await sgClient
