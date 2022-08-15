@@ -190,8 +190,8 @@ export default class Engine {
   setupPixelColor() {
     this.pixelColors = {
       phaseOne: new three.Color('#004E98'),
-      phaseTwo: new three.Color('#D7263D'),
-      phaseThree: new three.Color('#7CEA9C'),
+      phaseTwo: new three.Color('#84DD63'),
+      phaseThree: new three.Color('#FB3640'),
       current: new three.Color(),
     }
 

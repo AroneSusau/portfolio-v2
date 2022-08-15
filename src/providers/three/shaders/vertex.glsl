@@ -31,8 +31,13 @@ secondPhase.z = 0.5 * sin(secondPhase.y + uTime / uTime);
 secondPhase.z += 0.5 * cos(secondPhase.x + uTime);
 
 // Third phase
+thirdPhase.x = 1.0 * sin(thirdPhase.y + uTime);
+thirdPhase.z = 1.0 * cos(thirdPhase.y + uTime);
+thirdPhase.y = 1.0 * cos(thirdPhase.x + uTime);
+
 thirdPhase.x += 1.0 * sin(thirdPhase.y + uTime);
-thirdPhase.y += 1.0 * cos(uTime);
+thirdPhase.z += 1.0 * cos(thirdPhase.y + uTime);
+thirdPhase.y += 1.0 * sin(thirdPhase.x + uTime);
 
 // Mixing
 if (p1) {
