@@ -1,3 +1,4 @@
+import usePagination from './hooks/usePagination'
 import {
   Grid,
   Typography,
@@ -7,13 +8,14 @@ import {
   CardContent,
   Chip,
   Link,
+  Pagination,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import * as uuid from 'uuid'
 
 function ToProjectCard({ name, description, topics, url }) {
   return (
-    <Card key={uuid.v4()} sx={{ width: 250, backgroundColor: '#ffffff22' }}>
+    <Card key={uuid.v4()} sx={{ width: 250, backgroundColor: '#000000d3' }}>
       <CardContent>
         <Box
           display="flex"
@@ -59,6 +61,16 @@ function ToProjectCard({ name, description, topics, url }) {
 export default function Projects() {
   const host = process.env.NEXT_PUBLIC_HOST
   const [projects, setProjects] = useState([])
+  const [page, setPage] = useState(1)
+  const PER_PAGE = 5
+
+  const count = Math.ceil(projects.length / PER_PAGE)
+  const _DATA = usePagination(projects, PER_PAGE)
+
+  const handleChange = (e, p) => {
+    setPage(p)
+    _DATA.jump(p)
+  }
 
   useEffect(async () => {
     fetch(host + 'api/projects')
@@ -87,33 +99,36 @@ export default function Projects() {
           Some things I've built
         </Typography>
       </Box>
-      <Grid container sx={{ margin: 'auto' }}>
-        <Box
-          display="flex"
-          flexDirection="column"
-          gap={4}
-          justifyContent="center"
-        >
-          <Box
-            display="flex"
-            flexDirection="row"
-            flexWrap="wrap"
-            justifyContent="center"
-            gap={4}
-            padding={4}
-            sx={{
-              backgroundColor: 'transparent',
-              borderRadius: '5px',
-            }}
-          >
-            {/* 
-              TODO: - pagination is a nice to have, especially on mobile. 
-                    - Also transition effects on scroll-into-view.
-            */}
-            {projects}
-          </Box>
-        </Box>
-      </Grid>
+      <Box
+        display="flex"
+        flexDirection="row"
+        flexWrap="wrap"
+        justifyContent="center"
+        gap={4}
+        padding={4}
+        sx={{
+          backgroundColor: 'transparent',
+          borderRadius: '5px',
+        }}
+      >
+        {_DATA.currentData()}
+      </Box>
+      <Box display="flex" justifyContent="center">
+        <Pagination
+          color="white"
+          sx={{
+            'button, svg': {
+              color: '#ffffff',
+            },
+            '.Mui-selected': {
+              color: '#000000 !important',
+            },
+          }}
+          count={count}
+          page={page}
+          onChange={handleChange}
+        ></Pagination>
+      </Box>
     </Container>
   )
 }
