@@ -22,19 +22,18 @@ export default async function handler(req, res) {
   const contactEmail = new Contact(email, subject, message)
   const validationResult = contactEmail.validate()
 
-  if (validationResult !== undefined) {
-    res.status(Status.BAD_REQUEST).json(NewBadRequestError(validationResult))
+  if (!validationResult.success) {
+    res
+      .status(Status.BAD_REQUEST)
+      .json(NewBadRequestError(validationResult.value))
     return
   }
 
   await sgClient
     .sendContactEmail(email, subject, message)
-    .then((_) => {
-      res.status(Status.NO_CONTENT).end()
-      return
-    })
+    .then(() => res.status(Status.NO_CONTENT).end())
     .catch((err) => {
+      console.dir(err)
       res.status(Status.INTERNAL_SERVICE_ERROR).json(NewInternalServiceError())
-      return
     })
 }

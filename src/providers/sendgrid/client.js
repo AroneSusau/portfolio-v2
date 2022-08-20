@@ -1,4 +1,4 @@
-import { isInvalid } from '../../util/helper'
+import { isEmpty } from '../../util/helper'
 
 const sgMail = require('@sendgrid/mail')
 
@@ -11,19 +11,19 @@ sgMail.setApiKey(sgAPIKey)
 
 export class Client {
   constructor() {
-    if (isInvalid(sgAPIKey)) {
+    if (isEmpty(sgAPIKey)) {
       throw new Error('Sendgrid API Key not defined')
     }
 
-    if (isInvalid(sgTemplateId)) {
+    if (isEmpty(sgTemplateId)) {
       throw new Error('Sendgrid Template ID not defined')
     }
 
-    if (isInvalid(sgReceiver)) {
+    if (isEmpty(sgReceiver)) {
       throw new Error('Sendgrid Receiver not defined')
     }
 
-    if (isInvalid(sgSender)) {
+    if (isEmpty(sgSender)) {
       throw new Error('Sendgrid Sender not defined')
     }
   }

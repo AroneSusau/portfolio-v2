@@ -22,3 +22,7 @@ export const NewBadRequestError = (reason) => {
     message: reason,
   }
 }
+
+export const errResponse = ({ status, statusText }) => {
+  throw new Error(`${status}: ${statusText}`)
+}

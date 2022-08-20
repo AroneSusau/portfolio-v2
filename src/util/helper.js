@@ -1,1 +1,1 @@
-export const isInvalid = (input) => input === '' || input === undefined
+export const isEmpty = (input) => input === '' || input === undefined

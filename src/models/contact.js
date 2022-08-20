@@ -1,4 +1,5 @@
-import { isInvalid } from '../util/helper'
+import { isEmpty } from '../util/helper'
+import { ValidationResult } from './validationResult'
 
 export class Contact {
   constructor(email, subject, message) {
@@ -8,18 +9,18 @@ export class Contact {
   }
 
   validate() {
-    if (isInvalid(this.email)) {
-      return 'email is invalid'
+    if (isEmpty(this.email)) {
+      return new ValidationResult('email is invalid')
     }
 
-    if (isInvalid(this.subject)) {
-      return 'subject is invalid'
+    if (isEmpty(this.subject)) {
+      return new ValidationResult('subject is invalid')
     }
 
-    if (isInvalid(this.message)) {
-      return 'message is invalid'
+    if (isEmpty(this.message)) {
+      return new ValidationResult('message is invalid')
     }
 
-    return undefined
+    return new ValidationResult('success', true)
   }
 }
