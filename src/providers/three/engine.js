@@ -121,6 +121,7 @@ export default class Engine {
   }
 
   // TODO: move these types of functions into util class
+  // I'm 90% sure three has this util func somewhere
   clamp(value, min, max) {
     if (value > max) {
       return max
@@ -199,6 +200,7 @@ export default class Engine {
   }
 
   updatePixelColor() {
+    // TODO: these values can be passed as a uniform to the shaders
     const p1 = this.normalScroll >= 0.0 && this.normalScroll < 0.5
     const p2 = this.normalScroll >= 0.5 && this.normalScroll <= 1.0
 
